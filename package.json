@@ -1,0 +1,35 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "tsc -p . && node ./lib/index.js",
+    "tems": "tsc -p . && node ./lib/tems.js"
+  },
+  "dependencies": {
+    "@rdfjs/dataset": "^2.0.2",
+    "@rdfjs/parser-jsonld": "^2.1.3",
+    "@rdfjs/serializer-turtle": "^1.1.5",
+    "@zazuko/env-node": "^3.0.0",
+    "n3": "^1.25.2",
+    "rdf-validate-shacl": "^0.6.2",
+    "@semantizer/types" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/packages/types",
+    "@semantizer/core" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/packages/core",
+    "@semantizer/core-rdfjs" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/packages/core-rdfjs",
+    "@semantizer/loader-quad-stream-rdfjs" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/packages/loader-quad-stream-rdfjs",
+    "@semantizer/default" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/packages/default",
+    "@semantizer/mixin-dataset" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/dataset",
+    "@semantizer/mixin-index" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/index",
+    "@semantizer/mixin-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/shacl",
+    "@semantizer/utils-index-querying-strategy-shacl-final" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-final",
+    "@semantizer/utils-index-querying-strategy-shacl-comunica" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-comunica",
+    "@semantizer/utils-index-querying-strategy-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl",
+    "@semantizer/utils-index-querying-strategy-shacl-conjunction": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-conjunction",
+    "@semantizer/utils-shacl-validator-default": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/shacl-validator-default"
+  },
+  "devDependencies": {
+    "@types/n3": "^1.24.2",
+    "@types/rdfjs__dataset": "^2.0.7",
+    "@types/rdfjs__parser-jsonld": "^2.1.7",
+    "@types/rdfjs__serializer-turtle": "^1.1.0",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "@context": {
+        "idx": "https://ns.inria.fr/idx/terms#",
+        "sh": "http://www.w3.org/ns/shacl#",
+        "sib": "https://cdn.startinblox.com/owl#",
+        "sh:path": {
+            "@type": "@id"
+        }
+    },
+    "@id": "https://api.test-inria-index.startinblox.com/fedex/indexes/users/index#first_name",
+    "@type": "idx:IndexEntry",
+    "idx:hasShape": {
+        "@type": "sh:NodeShape",
+        "sh:closed": "false",
+        "sh:property": [
+            {
+                "sh:path": "sib:firstName"
+            }
+        ]
+    },
+    "idx:hasSubIndex": "https://api.test-inria-index.startinblox.com/fedex/indexes/users/first_name/index"
+}

@@ -1,0 +1,348 @@
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    sh:closed "false";
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:node [
+        a sh:NodeShape ;
+        sh:property [
+            sh:path sh:property ;
+            sh:minCount 1 ;
+            sh:node [
+                a sh:NodeShape;
+                sh:property [
+                    sh:path sh:path;
+                    sh:hasValue sib:firstName;
+                    sh:minCount 1;
+                ]
+            ]
+        ]
+        ]
+    ]
+    .
+
+
+# works with only one sib:firstname
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    sh:closed "false";
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+        	sh:path sh:property ;
+        	sh:minCount 1;
+            sh:property [
+            	sh:path sh:path;
+                sh:hasValue sib:firstName;
+            ]
+        ]
+    ]
+    .
+
+
+# shape qui fonctionne pour trouver une entrée pour sib:firstName
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    sh:closed false;
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+        	sh:path sh:property ;
+        	sh:minCount 1;
+            sh:qualifiedValueShape [
+				sh:path sh:path ;
+				sh:hasValue sib:firstName ;
+			];
+			sh:qualifiedMinCount 1 ;
+        ]
+    ]
+    .
+
+
+# shape pour index finaux
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+	@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    sh:closed false;
+    sh:property [
+    	sh:path idx:hasSubIndex;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+        	sh:path sh:property ;
+        	sh:minCount 1;
+            sh:qualifiedValueShape [
+				sh:path sh:path ;
+				sh:hasValue sib:skills ;
+			], [
+            	sh:path sh:hasValue;
+                sh:hasValue <https://api.test-inria2.startinblox.com/skills/1/>
+            ];
+			sh:qualifiedMinCount 1 ;
+        ];
+    ]	
+    .
+
+# shape pour résultat (path + value avec hasTarget)
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+	@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    #sh:closed false;
+    sh:property [
+    	sh:path idx:hasTarget;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+        	sh:path sh:property ;
+        	sh:minCount 1;
+            sh:qualifiedValueShape 
+            	[
+					sh:path sh:path ;
+					sh:hasValue rdf:type ;
+				], 
+                [
+            		sh:path sh:hasValue;
+                	sh:hasValue sib:User
+            	],
+                [
+                	sh:path sh:path;
+                    sh:hasValue sib:skills
+                ],
+                [
+                	sh:path sh:hasValue;
+                    sh:hasValue <https://api.test-inria2.startinblox.com/skills/1/>
+                ];
+			sh:qualifiedMinCount 1 ;
+        ];
+    ]
+    .
+
+# shape pour résultat multi-critère (path + value avec hasTarget)
+    @prefix sh: <http://www.w3.org/ns/shacl#> .
+    @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+    @prefix schema: <http://schema.org/> .
+    @prefix idx: <https://ns.inria.fr/idx/terms#>.
+    @prefix sib: <https://cdn.startinblox.com/owl#>.
+	@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+    idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    #sh:closed false;
+    sh:property [
+    	sh:path idx:hasTarget;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+        	sh:path sh:property ;
+        	sh:minCount 1;
+            sh:qualifiedValueShape 
+                sh:and (
+                    [ sh:path sh:path ; sh:hasValue rdf:type ], 
+                    [ sh:path sh:hasValue; sh:hasValue sib:User ]
+                ),
+                sh:and (
+                    [ sh:path sh:path; sh:hasValue sib:skills ],
+                    [ sh:path sh:hasValue; sh:hasValue <https://api.test-inria2.startinblox.com/skills/1/> ];
+                )
+			sh:qualifiedMinCount 1 ;
+        ];
+    ]
+    .
+
+# multi-critères avec options
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix idx: <https://ns.inria.fr/idx/terms#>.
+@prefix sib: <https://cdn.startinblox.com/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    #sh:closed false;
+    sh:property [
+        sh:path idx:hasTarget;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+            sh:path sh:property ;
+            sh:minCount 1;
+            sh:qualifiedValueShape 
+                [
+                    sh:and (
+                        [ sh:path sh:path ; sh:hasValue rdf:type ]
+                        [ sh:path sh:hasValue; sh:hasValue sib:User ]
+                    )
+                ],
+                [
+                	sh:or(
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:skills ]
+                            [ sh:path sh:hasValue; sh:hasValue <https://api.test-inria2.startinblox.com/skills/1/> ]
+                        )
+                      ]
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:city ]
+                            [ sh:path sh:hasValue; sh:hasValue <https://api.test-inria2.startinblox.com/cities/paris/> ]
+                        )
+                      ]
+                    )
+                ];
+            sh:qualifiedMinCount 1;            
+        ]
+    ]
+    .
+
+# shape pour trouver les sous indexes en multi critère avec valeur optionnelle
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix idx: <https://ns.inria.fr/idx/terms#>.
+@prefix sib: <https://cdn.startinblox.com/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    #sh:closed false;
+    sh:property [
+        sh:path idx:hasSubIndex;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+            sh:path sh:property ;
+            sh:minCount 1;
+            sh:qualifiedValueShape 
+                [
+                    sh:and (
+                        [ sh:path sh:path ; sh:hasValue rdf:type ]
+                        [ sh:path sh:hasValue; sh:hasValue sib:User ]
+                    )
+                ],
+                [
+                	sh:or(
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:firstName ] 
+                            [ sh:path sh:hasValue; sh:in ( "Tom" ) ]
+                        )
+                      ]
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:city ]
+                            [ sh:path sh:hasValue; sh:in ( <https://api.test-inria2.startinblox.com/cities/paris/> ) ]
+                        )
+                      ]
+                    )
+                ];
+            sh:qualifiedMinCount 1;            
+        ]
+    ]
+    .
+
+# shape pour trouver sous index sans valeur
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix idx: <https://ns.inria.fr/idx/terms#>.
+@prefix sib: <https://cdn.startinblox.com/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+
+idx:IndexEntry
+    a rdfs:Class, sh:NodeShape ;
+    #sh:closed false;
+    sh:property [
+        sh:path idx:hasSubIndex;
+        sh:minCount 1;
+    ];
+    sh:property [
+        sh:path idx:hasShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:property [
+            sh:path sh:property ;
+            sh:minCount 1;
+            sh:qualifiedValueShape 
+                [
+                    sh:and (
+                        [ sh:path sh:path ; sh:hasValue rdf:type ]
+                        [ sh:path sh:hasValue; sh:hasValue sib:User ]
+                    )
+                ],
+                [
+                	sh:or(
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:firstName ] 
+                            [ sh:path sh:hasValue ; sh:maxCount 0 ]
+                        )
+                      ]
+                      [
+                        sh:and (
+                            [ sh:path sh:path ; sh:hasValue sib:city ]
+                            [ sh:path sh:hasValue ; sh:maxCount 0 ]
+                        )
+                      ]
+                    )
+                ];
+            sh:qualifiedMinCount 1;            
+        ]
+    ]
+    .
