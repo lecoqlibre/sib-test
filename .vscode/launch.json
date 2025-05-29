@@ -16,6 +16,19 @@
                 "${workspaceFolder}/**/*.js"
             ],
             "runtimeArgs": ["--preserve-symlinks", "--preserve-symlinks-main"],
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Tems",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/lib/tems.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "runtimeArgs": ["--preserve-symlinks", "--preserve-symlinks-main"],
         }
     ]
 }

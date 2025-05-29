@@ -387,7 +387,7 @@ idx:IndexEntry
     const shaclStrategyLogistics = new IndexQueryingStrategyShaclDefaultImpl(targetShapeLogistics, finalIndexLogisticsStrategy, shaclValidator, entryTransformer);
     const conjunctionStrategy = new IndexQueryingStrategyShaclConjunctionDefaultImpl([shaclStrategyEngineer, shaclStrategyLogistics], entryTransformer);
 
-    const resultStream = index.query(conjunctionStrategy);
+    const resultStream = index.mixins.index.query(conjunctionStrategy);
     resultStream.on('data', (result: NamedNode) => console.log(result.value));
 
     // await new Promise((resolve, reject) => {

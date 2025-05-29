@@ -1,7 +1,7 @@
 import { DatasetCoreRdfjs, Fetch, Loader, LoaderQuadStream, LoggingEntry, NamedNode, Quad, Semantizer, Stream } from "@semantizer/types";
 import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
 import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl";
-import { IndexStrategyFinalShapeDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl-final";
+import { IndexStrategyFinalShapeDefaultImpl, IndexQueryingStrategyShaclUsingFinalIndex } from "@semantizer/utils-index-querying-strategy-shacl-final";
 import dataFactory from "@rdfjs/data-model";
 import datasetFactory from "@rdfjs/dataset";
 import ParserJsonld from '@rdfjs/parser-jsonld';
@@ -26,6 +26,11 @@ class LoaderTems implements Loader {
                 "X-Bypass-Policy": "true"
             }
         });
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
         const responseText = await response.text();
         const input = new Readable({
             read: () => {
@@ -60,6 +65,7 @@ class LoaderTems implements Loader {
 class LoaderQuadStreamTems implements LoaderQuadStream {
 
     public async load(uri: string, otherFetch?: Fetch): Promise<Stream<Quad>> {
+        console.log("Tems loading " + uri);
         let response = await fetch(uri, {
             "method": "GET",
             "headers": {
@@ -67,6 +73,11 @@ class LoaderQuadStreamTems implements LoaderQuadStream {
                 "X-Bypass-Policy": "true"
             }
         });
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
         const responseText = await response.text();
         const input = new Readable({
             read: () => {
@@ -101,9 +112,12 @@ Object.defineProperty(globalThis, "SEMANTIZER", {
 });
 
 semantizer.enableLogging();
-semantizer.registerEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.level, logEntry.message));
+semantizer.registerEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.date, logEntry.level, logEntry.message));
 
-const index = await semantizer.load("https://api.tems-dev3.startinblox.com/indexes/objects/trial8/index", indexFactory);
+// https://api.tems-dev3.startinblox.com/indexes/objects/trial8/index
+// https://api.tems-dev.startinblox.com/fedex/tems-3dobject-explicit/index
+// const index = await semantizer.load("https://api.tems-dev2.startinblox.com/indexes/objects/trial8/index", indexFactory);
+const index = await semantizer.load("https://api.tems-dev.startinblox.com/fedex/tems-3dobject-explicit/index", indexFactory);
 
 const targetShapeTurtle = `
         @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -138,7 +152,7 @@ const targetShapeTurtle = `
                 [
                     sh:and (
                         [ sh:path sh:path; sh:hasValue sib:title ]
-                        [ sh:path sh:pattern; sh:hasValue "ind.*"  ]
+                        [ sh:path sh:pattern; sh:hasValue "tit.*"  ]
                     )
                 ];
 			sh:qualifiedMinCount 1 ;
@@ -179,7 +193,7 @@ sh:property [
             [
                 sh:and (
                     [ sh:path sh:path; sh:hasValue sib:title ]
-                    [ sh:path sh:pattern; sh:hasValue "ind.*"  ]
+                    [ sh:path sh:pattern; sh:hasValue "tit.*"  ]
                 )
             ];
         sh:qualifiedMinCount 1 ;
@@ -220,7 +234,7 @@ sh:property [
             [
                 sh:and (
                     [ sh:path sh:path ; sh:hasValue sib:title ] 
-                    [ sh:path sh:hasValue ; sh:maxCount 0 ]
+                    [ sh:path sh:pattern ; sh:maxCount 0 ]
                 )
             ];
         sh:qualifiedMinCount 1;            
@@ -243,7 +257,7 @@ const shaclValidator = new ValidatorImpl();
 const entryTransformer = new EntryStreamTransformerDefaultImpl(semantizer);
 
 const finalIndexStrategy = new IndexStrategyFinalShapeDefaultImpl(finalIndexShape, subIndexShape, shaclValidator, entryTransformer);
-const shaclStrategy = new IndexQueryingStrategyShaclDefaultImpl(targetShape, finalIndexStrategy, shaclValidator, entryTransformer);
+const shaclStrategy = new IndexQueryingStrategyShaclUsingFinalIndex(targetShape, finalIndexStrategy, shaclValidator, entryTransformer);
 
-const resultStream = index.query(shaclStrategy);
+const resultStream = index.mixins.index.query(shaclStrategy);
 resultStream.on('data', (result: NamedNode) => console.log("RESULT -> " + result.value));
