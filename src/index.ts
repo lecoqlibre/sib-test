@@ -1,9 +1,9 @@
 import semantizer from "@semantizer/default";
 import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
 import { Dataset, LoggingEntry, NamedNode, ShaclValidationReport, ShaclValidationResult, ShaclValidator } from "@semantizer/types";
-import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl";
-import { IndexQueryingStrategyShaclConjunctionDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl-conjunction";
-import { IndexStrategyFinalShapeDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl-final";
+import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
+import { IndexQueryingStrategyShaclConjunctionDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl-conjunction";
+import { IndexStrategyFinalShapeDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl-final";
 import SHACLValidator from 'rdf-validate-shacl';
 // import datasetFactory from '@rdfjs/dataset';
 import DatasetCore from "@rdfjs/dataset/DatasetCore";
@@ -46,8 +46,8 @@ export const RDF = {
 }
 
 const main = async () => {
-    semantizer.enableLogging();
-    semantizer.registerEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.level, logEntry.message));
+    semantizer.getConfiguration().enableLogging();
+    semantizer.getConfiguration().registerLoggingEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.level, logEntry.message));
     const index = await semantizer.load("http://localhost:8000/root.jsonld", indexFactory);
 
     const targetShapeTurtle = `

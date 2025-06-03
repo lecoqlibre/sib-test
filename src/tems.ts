@@ -1,14 +1,15 @@
-import { DatasetCoreRdfjs, Fetch, Loader, LoaderQuadStream, LoggingEntry, NamedNode, Quad, Semantizer, Stream } from "@semantizer/types";
+import { DatasetCoreRdfjs, Fetch, Loader, LoaderQuadStream, LoggingComponent, LoggingEntry, LoggingLevel, NamedNode, Quad, Semantizer, Stream, WithLoggingOptions } from "@semantizer/types";
 import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
-import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/utils-index-querying-strategy-shacl";
-import { IndexStrategyFinalShapeDefaultImpl, IndexQueryingStrategyShaclUsingFinalIndex } from "@semantizer/utils-index-querying-strategy-shacl-final";
+import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
+import { LoaderBase } from "@semantizer/util-loader-base";
+import { IndexStrategyFinalShapeDefaultImpl, IndexQueryingStrategyShaclUsingFinalIndex } from "@semantizer/util-index-querying-strategy-shacl-final";
 import dataFactory from "@rdfjs/data-model";
 import datasetFactory from "@rdfjs/dataset";
 import ParserJsonld from '@rdfjs/parser-jsonld';
 import SemantizerImpl, { ConfigurationImpl, DatasetBaseFactoryImpl, MixinFactoryImpl } from "@semantizer/core";
 import { DatasetCoreRdfjsImpl } from "@semantizer/core-rdfjs";
 import { DatasetMixin } from "@semantizer/mixin-dataset";
-import { ValidatorImpl } from "@semantizer/utils-shacl-validator-default";
+import { ValidatorImpl } from "@semantizer/util-shacl-validator-default";
 import N3 from "n3";
 import { Readable } from 'stream';
 
@@ -16,7 +17,14 @@ declare global {
     var SEMANTIZER: Semantizer;
 }
 
-class LoaderTems implements Loader {
+class LoaderTems extends LoaderBase implements Loader {
+
+    public getLoggingComponent(): LoggingComponent {
+        return {
+            type: 'PACKAGE',
+            name: 'loader-tems'
+        }
+    }
 
     public async load(uri: string, otherFetch?: Fetch): Promise<DatasetCoreRdfjs<Quad, Quad>> {
         let response = await fetch(uri, {
@@ -62,10 +70,17 @@ class LoaderTems implements Loader {
 
 }
 
-class LoaderQuadStreamTems implements LoaderQuadStream {
+class LoaderQuadStreamTems extends LoaderBase implements LoaderQuadStream {
+
+    public getLoggingComponent(): LoggingComponent {
+        return {
+            type: 'PACKAGE',
+            name: 'loader-quad-stream-tems'
+        }
+    }
 
     public async load(uri: string, otherFetch?: Fetch): Promise<Stream<Quad>> {
-        console.log("Tems loading " + uri);
+        this.logInfo(`Loading ${uri}`);
         let response = await fetch(uri, {
             "method": "GET",
             "headers": {
@@ -111,8 +126,8 @@ Object.defineProperty(globalThis, "SEMANTIZER", {
     configurable: false, // can't be deleted
 });
 
-semantizer.enableLogging();
-semantizer.registerEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.date, logEntry.level, logEntry.message));
+semantizer.getConfiguration().enableLogging();
+semantizer.getConfiguration().registerLoggingEntryCallback((logEntry: LoggingEntry) => console.log(logEntry.date, logEntry.level, `[${logEntry.component.type}/${logEntry.component.name}]`, logEntry.source, logEntry.message, `(${logEntry.instance})`));
 
 // https://api.tems-dev3.startinblox.com/indexes/objects/trial8/index
 // https://api.tems-dev.startinblox.com/fedex/tems-3dobject-explicit/index

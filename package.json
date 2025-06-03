@@ -21,11 +21,12 @@
     "@semantizer/mixin-dataset" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/dataset",
     "@semantizer/mixin-index" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/index",
     "@semantizer/mixin-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/shacl",
-    "@semantizer/utils-index-querying-strategy-shacl-final" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-final",
-    "@semantizer/utils-index-querying-strategy-shacl-comunica" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-comunica",
-    "@semantizer/utils-index-querying-strategy-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl",
-    "@semantizer/utils-index-querying-strategy-shacl-conjunction": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-conjunction",
-    "@semantizer/utils-shacl-validator-default": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/shacl-validator-default"
+    "@semantizer/util-index-querying-strategy-shacl-final" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-final",
+    "@semantizer/util-index-querying-strategy-shacl-comunica" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-comunica",
+    "@semantizer/util-index-querying-strategy-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl",
+    "@semantizer/util-index-querying-strategy-shacl-conjunction": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-conjunction",
+    "@semantizer/util-loader-base": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/loader-base",
+    "@semantizer/util-shacl-validator-default": "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/shacl-validator-default"
   },
   "devDependencies": {
     "@types/n3": "^1.24.2",
