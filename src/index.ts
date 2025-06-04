@@ -1,6 +1,6 @@
 import semantizer from "@semantizer/default";
 import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
-import { Dataset, LoggingEntry, NamedNode, ShaclValidationReport, ShaclValidationResult, ShaclValidator } from "@semantizer/types";
+import { DatasetRdfjs, LoggingEntry, NamedNode, ShaclValidationReport, ShaclValidationResult, ShaclValidator } from "@semantizer/types";
 import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
 import { IndexQueryingStrategyShaclConjunctionDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl-conjunction";
 import { IndexStrategyFinalShapeDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl-final";
@@ -402,7 +402,7 @@ type ValidationReport = Awaited<ReturnType<SHACLValidator["validate"]>>;
 
 class ValidatorImpl implements ShaclValidator {
 
-    public async validate(shapeGraph: Dataset, dataGraph: Dataset): Promise<ShaclValidationReport> {
+    public async validate(shapeGraph: DatasetRdfjs, dataGraph: DatasetRdfjs): Promise<ShaclValidationReport> {
         const validator = new SHACLValidator(shapeGraph, {});
         const validationReport = await validator.validate(dataGraph);
         return new ValidationReportImpl(validationReport);
@@ -430,7 +430,7 @@ class ValidationReportImpl implements ShaclValidationReport {
 
 main();
 
-const serialize = async (dataset: Dataset) => {
+const serialize = async (dataset: DatasetRdfjs) => {
     const serializerEntry = new Serializer();
     const inputEntry = Readable.from(dataset as DatasetCore);
     const outputEntry = serializerEntry.import(inputEntry);
