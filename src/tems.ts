@@ -1,5 +1,6 @@
 import { DatasetCoreRdfjs, Fetch, Loader, LoaderQuadStream, LoggingComponent, LoggingEntry, LoggingLevel, NamedNode, Quad, Semantizer, Stream, WithLoggingOptions } from "@semantizer/types";
-import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
+import { indexFactory } from "@semantizer/mixin-index";
+import { EntryStreamTransformerStrategyDefaultImpl } from "@semantizer/util-index-entry-stream-transformer";
 import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
 import { LoaderBase } from "@semantizer/util-loader-base";
 import { IndexStrategyFinalShapeDefaultImpl, IndexQueryingStrategyShaclUsingFinalIndex } from "@semantizer/util-index-querying-strategy-shacl-final";
@@ -269,7 +270,7 @@ const subIndexShape = semantizer.build();
 subIndexShape.addAll(parser.parse(subIndexShapeTurtle));
 
 const shaclValidator = new ValidatorImpl();
-const entryTransformer = new EntryStreamTransformerDefaultImpl(semantizer);
+const entryTransformer = new EntryStreamTransformerStrategyDefaultImpl(semantizer);
 
 const finalIndexStrategy = new IndexStrategyFinalShapeDefaultImpl(finalIndexShape, subIndexShape, shaclValidator, entryTransformer);
 const shaclStrategy = new IndexQueryingStrategyShaclUsingFinalIndex(targetShape, finalIndexStrategy, shaclValidator, entryTransformer);

@@ -1,5 +1,6 @@
 import semantizer from "@semantizer/default";
-import { EntryStreamTransformerDefaultImpl, indexFactory } from "@semantizer/mixin-index";
+import { indexFactory } from "@semantizer/mixin-index";
+import { EntryStreamTransformerStrategyDefaultImpl } from "@semantizer/util-index-entry-stream-transformer";
 import { DatasetRdfjs, LoggingEntry, NamedNode, ShaclValidationReport, ShaclValidationResult, ShaclValidator } from "@semantizer/types";
 import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
 import { IndexQueryingStrategyShaclConjunctionDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl-conjunction";
@@ -375,7 +376,7 @@ idx:IndexEntry
     subIndexShape.addAll(parser.parse(subIndexShapeTurtle));
 
     const shaclValidator = new ValidatorImpl();
-    const entryTransformer = new EntryStreamTransformerDefaultImpl(semantizer);
+    const entryTransformer = new EntryStreamTransformerStrategyDefaultImpl(semantizer);
 
     // const finalIndexStrategy = new IndexStrategyFinalShapeDefaultImpl(finalIndexShape, subIndexShape, shaclValidator, entryTransformer);
     // const comunicaStrategy = new IndexStrategySparqlComunica(sparqlQuery, finalIndexShape, finalIndexStrategy, shaclValidator, entryTransformer);

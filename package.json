@@ -21,6 +21,7 @@
     "@semantizer/mixin-dataset" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/dataset",
     "@semantizer/mixin-index" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/index",
     "@semantizer/mixin-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/mixins/shacl",
+    "@semantizer/util-index-entry-stream-transformer" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-entry-stream-transformer",
     "@semantizer/util-index-querying-strategy-shacl-final" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-final",
     "@semantizer/util-index-querying-strategy-shacl-comunica" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl-comunica",
     "@semantizer/util-index-querying-strategy-shacl" : "file:/home/malecoq/Projets/semantizer/github/semantizer-typescript/src/utils/index-querying-strategy-shacl",
