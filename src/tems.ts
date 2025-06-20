@@ -1,5 +1,5 @@
 import { DatasetCoreRdfjs, Fetch, Loader, LoaderQuadStream, LoggingComponent, LoggingEntry, LoggingLevel, NamedNode, Quad, Semantizer, Stream, WithLoggingOptions } from "@semantizer/types";
-import { indexFactory } from "@semantizer/mixin-index";
+import { indexFactory, indexEntryShapeFactory } from "@semantizer/mixin-index";
 import { EntryStreamTransformerStrategyDefaultImpl } from "@semantizer/util-index-entry-stream-transformer";
 import { IndexQueryingStrategyShaclDefaultImpl } from "@semantizer/util-index-querying-strategy-shacl";
 import { LoaderBase } from "@semantizer/util-loader-base";
@@ -13,6 +13,7 @@ import { DatasetMixin } from "@semantizer/mixin-dataset";
 import { ValidatorImpl } from "@semantizer/util-shacl-validator-default";
 import N3 from "n3";
 import { Readable } from 'stream';
+import { write } from "fs";
 
 declare global {
     var SEMANTIZER: Semantizer;
@@ -257,6 +258,15 @@ sh:property [
     ]
 ].
 `;
+
+const shape = semantizer.build(indexEntryShapeFactory);
+shape.mixins.entry.addPropertyToTargetFinalResult();
+
+const writer = new N3.Writer({ format: 'text/turtle' });
+for (const quad of shape) {
+    writer.addQuad(quad);
+}
+writer.end((error, result) => console.log(result));
 
 const parser = new N3.Parser({ format: 'text/turtle' });
 
